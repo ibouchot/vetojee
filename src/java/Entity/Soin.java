@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "soin")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Soin.findAll", query = "SELECT s FROM Soin s")
     , @NamedQuery(name = "Soin.findByIdS", query = "SELECT s FROM Soin s WHERE s.idS = :idS")
@@ -88,6 +91,7 @@ public class Soin implements Serializable {
         this.tarifS = tarifS;
     }
 
+    @XmlTransient
     public Collection<Consultation> getConsultationCollection() {
         return consultationCollection;
     }

@@ -23,6 +23,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +32,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "consultation")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Consultation.findAll", query = "SELECT c FROM Consultation c")
     , @NamedQuery(name = "Consultation.findByIdC", query = "SELECT c FROM Consultation c WHERE c.idC = :idC")
@@ -102,6 +105,7 @@ public class Consultation implements Serializable {
         this.prixC = prixC;
     }
 
+    @XmlTransient
     public Collection<Soin> getSoinCollection() {
         return soinCollection;
     }
