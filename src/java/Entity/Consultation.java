@@ -9,17 +9,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,11 +54,8 @@ public class Consultation implements Serializable {
     private Integer heureC;
     @Column(name = "prixC")
     private Integer prixC;
-    @JoinTable(name = "pratique", joinColumns = {
-        @JoinColumn(name = "idC", referencedColumnName = "IdC")}, inverseJoinColumns = {
-        @JoinColumn(name = "IdS", referencedColumnName = "IdS")})
-    @ManyToMany
-    private Collection<Soin> soinCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idC")
+    private Collection<Pratique> pratiqueCollection;
     @JoinColumn(name = "idV", referencedColumnName = "IdV")
     @ManyToOne(optional = false)
     private Veterinaire idV;
@@ -106,12 +103,12 @@ public class Consultation implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Soin> getSoinCollection() {
-        return soinCollection;
+    public Collection<Pratique> getPratiqueCollection() {
+        return pratiqueCollection;
     }
 
-    public void setSoinCollection(Collection<Soin> soinCollection) {
-        this.soinCollection = soinCollection;
+    public void setPratiqueCollection(Collection<Pratique> pratiqueCollection) {
+        this.pratiqueCollection = pratiqueCollection;
     }
 
     public Veterinaire getIdV() {

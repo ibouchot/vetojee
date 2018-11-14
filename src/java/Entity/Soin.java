@@ -8,14 +8,15 @@ package Entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,8 +50,8 @@ public class Soin implements Serializable {
     private Integer dureeS;
     @Column(name = "tarifS")
     private Integer tarifS;
-    @ManyToMany(mappedBy = "soinCollection")
-    private Collection<Consultation> consultationCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idS")
+    private Collection<Pratique> pratiqueCollection;
 
     public Soin() {
     }
@@ -92,12 +93,12 @@ public class Soin implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Consultation> getConsultationCollection() {
-        return consultationCollection;
+    public Collection<Pratique> getPratiqueCollection() {
+        return pratiqueCollection;
     }
 
-    public void setConsultationCollection(Collection<Consultation> consultationCollection) {
-        this.consultationCollection = consultationCollection;
+    public void setPratiqueCollection(Collection<Pratique> pratiqueCollection) {
+        this.pratiqueCollection = pratiqueCollection;
     }
 
     @Override

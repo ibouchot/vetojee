@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>GESTION DES CONSULTATIONS</h1>
+       <p:button outcome="admin" value="Retour" icon="ui-icon-star"/> 
+       
+        <br />
+            
+         
+        <h:form>
+            
+    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
+        
+        <p:outputLabel value="Selection du soin" />
+ 
+        <p:selectManyMenu  id="advanced" value="#{vue.listeSoin}"
+                          var="t" filter="true"  showCheckbox="true">
+            
+            <c:forEach items="#{vue.listeSoin}" var="lesoin">
+                
+                <f:selectItems value="#{vue.soin}" var="theme" itemLabel="#{lesoin.nomS}" itemValue="#{lesoin}" />
+                <p:graphicImage url="image/#{lesoin.nomS}.jpg" />
+               
+            </c:forEach>
+            
+            
+            
+           
+        </p:selectManyMenu>
+      
+    </h:panelGrid>
+ 
+    <p:separator />
+ 
+   
+ 
+
+</h:form>
+        
+<p:panelGrid columns="3" layout="grid">  
+    <h:form> 
+           <p>INSERT CONSULTATION</p>
+           
+           <p>PRIX DE LA CONSULTATION</p>
+           <p:inputText value="#{vue.consultation.prixC}"/><br/>
+           <p>DATE DE LA CONSULTATION</p>
+           <p:inputText value="#{vue.consultation.prixC}"/><br/>
+           <p>L'ANIMAL</p>
+           
+           <p:selectOneMenu id="basic" value="#{vue.animal.idA}">
+               
+               <c:forEach items="#{vue.listeAnimal}" var="lanimal">
+                   <f:selectItem itemLabel="#{lanimal.idA} #{lanimal.nomA} #{lanimal.tatouage}" itemValue="#{lanimal.idA}" />
+               </c:forEach>
+               
+           </p:selectOneMenu>
+           
+           <p>HEURE DE LA CONSULTATION</p>
+           <p:inputText value="#{vue.consultation.heureC}"/><br/>    
+           <p>id veto</p>
+           <p:selectOneMenu id="basic2" value="#{vue.veterinaire.idV}">
+            <c:forEach items="#{vue.listVeterinaire}" var="leveto">
+                <f:selectItem itemLabel="#{leveto.nomV}" itemValue="#{leveto.idV}" />
+            </c:forEach>
+            </p:selectOneMenu>
+           <br/>
+           <br/>
+  
+           <p:commandButton value="Ajouter" action="#{vue.addConsultation()}" ajax="false"/>
+           
+    </h:form>
+    
+     
+    <h:form> 
+           <p>UPDATE CONSULTATION</p>
+           
+           <p>identifiant consultation</p>
+           <p:inputText value="#{vue.consultation.idC}"/><br/>
+           <p>prix</p>
+           <p:inputText value="#{vue.consultation.prixC}"/><br/>
+           <p>l'animal</p>
+           <p:selectOneMenu id="basic" value="#{vue.animal.idA}">
+               
+               <c:forEach items="#{vue.listeAnimal}" var="lanimal">
+                   <f:selectItem itemLabel="#{lanimal.idA} #{lanimal.nomA} #{lanimal.tatouage}" itemValue="#{lanimal.idA}" />
+               </c:forEach>
+               
+           </p:selectOneMenu>
+           <p>id veto</p>
+           <p:selectOneMenu id="basic1" value="#{vue.veterinaire.idV}">
+            <c:forEach items="#{vue.listVeterinaire}" var="leveto">
+                <f:selectItem itemLabel="#{leveto.nomV}" itemValue="#{leveto.idV}" />
+            </c:forEach>
+            </p:selectOneMenu>
+           <br/>
+           <br/>
+            
+           <p:commandButton value="Mettre à jour" action="#{vue.updateConsultation()}" ajax="false"/>
+    </h:form>
+     
+    <h:form> 
+           <p>DELETE CONSULTATION</p>  
+           <p>identifiant consultation</p>
+           <p:inputText value="#{vue.consultation.idC}"/><br/>
+ 
+           <p:commandButton value="Supprimer" action="#{vue.deleteConsultation()}" ajax="false"/>
+    </h:form>
+    
+</p:panelGrid>
+<br/>      
+        
+        
+       
+<p:panelGrid columns="2" layout="grid">        
+        <p:dataTable id="tabconsul" var="listconsultation" value="#{vue.allConsultation}" draggableColumns="true" >
+                <p:column headerText="ID">
+                    <h:outputText value="#{listconsultation.idC}" />
+                </p:column>
+                <p:column headerText="DATE">
+                    <h:outputText value="#{listconsultation.dateC}" />
+                </p:column>
+                <p:column headerText="HEURE">
+                    <h:outputText value="#{listconsultation.heureC}" />
+                </p:column>
+                <p:column headerText="PRIX">
+                    <h:outputText value="#{listconsultation.prixC}" />
+                <p:column headerText="IDENTIFIANT ANIMAL                </p:column>
+">
+                    <h:outputText value="#{listconsultation.idA.nomA}#{listconsultation.idA.tatouage}" />
+                </p:column>
+                <p:column headerText="IDENTIFIANT VETERINAIRE">
+                    <h:outputText value="#{listconsultation.idV.prenomV}" />
+                </p:column>     
+        </p:dataTable>
+
+        <p:dataTable id="tabconsul2" var="listpratique" value="#{vue.listPratique}" draggableColumns="true" >
+                <p:column headerText="ID CONSULTATION">
+                    <h:outputText value="#{listpratique.idC.idC}" />
+                </p:column>
+                <p:column headerText="DATE">
+                    <h:outputText value="#{listpratique.idS.nomS}" />
+                </p:column>
+                <p:column headerText="IMAGE">
+                    <p:graphicImage url="ressources/image/#{listpratique.idS.nomS}.jpg" style ="max-width : 100% ; max-height:100%" />
+                </p:column>
+            
+                
+        </p:dataTable>
+</p:panelGrid>      
+       <br/>
+
+    </h:body>
+</html>
+

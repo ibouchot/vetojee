@@ -7,9 +7,24 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        User
+        <h1>COMPTE UTILISATEUR</h1>
         <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <p:button outcome="index" value="Menu de selection des comptes" icon="ui-icon-star"/> 
+        <br />
+        <br />
+        <p:dataTable id="tabsoin" var="listsoin" value="#{vue.listeSoin}" draggableColumns="true">
+                <p:column headerText="ID">
+                    <h:outputText value="#{listsoin.idS}" />
+                </p:column>
+                <p:column headerText="nomA">
+                    <h:outputText value="#{listsoin.nomS}" />
+                </p:column>  
+                <p:column headerText="dateNaissanceA">
+                    <h:outputText value="#{listsoin.tarifS}" />
+                </p:column>  
+                
+                
+        </p:dataTable>
         
     </h:body>
 </html>
